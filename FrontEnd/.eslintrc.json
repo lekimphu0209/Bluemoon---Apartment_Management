@@ -1,0 +1,10 @@
+{
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.jsx"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}

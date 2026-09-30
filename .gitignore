@@ -1,0 +1,46 @@
+HELP.md
+
+# Backend
+Backend/target/
+Backend/.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Frontend
+FrontEnd/node_modules/
+FrontEnd/build/
+FrontEnd/.env.local
+FrontEnd/.env.development.local
+FrontEnd/.env.test.local
+FrontEnd/.env.production.local
+
+# MySQL data
+mysql/data/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
