@@ -1,4 +1,27 @@
-# Template mẫu project nhập môn công nghệ phần mềm
+# BlueMoon - Hệ thống Quản lý Chung cư (Apartment Management)
+
+## Tổng quan dự án
+
+**BlueMoon** là hệ thống quản lý chung cư trên nền tảng web, được xây dựng cho đồ án môn học Công nghệ phần mềm (HUST). Hệ thống hỗ trợ ban quản lý tòa nhà vận hành các nghiệp vụ cốt lõi và cư dân theo dõi phí dịch vụ của mình.
+
+### Chức năng chính
+
+- **Xác thực & phân quyền** — đăng nhập/đăng ký bằng JWT, xác thực OTP qua email, phân quyền Admin/Resident
+- **Quản lý căn hộ** — CRUD thông tin căn hộ, tình trạng sở hữu, gán cư dân vào căn hộ
+- **Quản lý cư dân** — hồ sơ cư dân, tạm trú/tạm vắng, liên kết căn hộ
+- **Quản lý hóa đơn & phí** — tạo hóa đơn theo căn hộ/loại phí, theo dõi trạng thái thanh toán, nhắc hạn tự động qua email
+- **Khoản đóng góp** — quản lý các loại đóng góp (quỹ từ thiện, sự kiện) và lượt đóng góp của cư dân
+- **Thuê chỗ để xe** — đăng ký/quản lý chỗ để xe của cư dân
+- **Thông báo** — gửi thông báo tới cư dân
+- **Thanh toán trực tuyến** — tích hợp webhook SePay để đối soát thanh toán tự động
+- **Trang cá nhân** — cư dân xem/chỉnh sửa thông tin, lịch sử hóa đơn
+
+### Kiến trúc hệ thống
+
+- **Backend**: Spring Boot REST API, kiến trúc phân lớp (controller → service → repository → entity), bảo mật Spring Security + JWT, JPA/Hibernate ORM
+- **Frontend**: React 18 SPA, Chakra UI, React Router, Axios với JWT interceptor
+- **Database**: MySQL 8 trên Docker, schema tự sinh bởi JPA
+- **Triển khai**: Docker Compose orchestrate 3 services (MySQL, Backend, Frontend/Nginx), cấu hình tập trung qua file `.env` ở root
 
 ## Công nghệ đang sử dụng
 - Backend:

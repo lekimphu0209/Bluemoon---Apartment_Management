@@ -17,6 +17,9 @@ FrontEnd/.env.production.local
 # MySQL data
 mysql/data/
 
+# Root env file (contains secrets - không commit)
+.env
+
 ### STS ###
 .apt_generated
 .classpath
