@@ -24,77 +24,111 @@
 - **Triển khai**: Docker Compose orchestrate 3 services (MySQL, Backend, Frontend/Nginx), cấu hình tập trung qua file `.env` ở root
 
 ## Công nghệ đang sử dụng
-- Backend:
-    - Java 17
-    - Maven 3.9.11 (các bạn có thể tải bản mới nhất)
-- Frontend:
-    - Nodejs 16
-    - npm 8
-- Database:
-    - MySQL (chạy trên docker)
 
-## Cách cài đặt hệ thống
-**Lưu ý:** Đây là cài đặt cho hệ thống hiện tại. Nếu các bạn sử dụng công nghệ khác, phiên bản khác hoặc ngôn ngữ khác, thì cách cài đặt có thể khác đi nhiều.
-1. Cài đặt **docker** và **docker compose**. Sau đó mở terminal hoặc cmd trong thư mục "mysql", tạo thư mục "data" trong thư mục "mysql", chạy câu lệnh:
-<pre> docker compose up -d </pre>
+### Backend
+| Công nghệ | Phiên bản | Vai trò |
+|-----------|-----------|---------|
+| Java | 17 | Ngôn ngữ chính |
+| Spring Boot | 3.4.3 | Framework REST API |
+| Maven | 3.9.x | Quản lý dependency & build |
+| Spring Security + JJWT | 0.12.3 | Xác thực JWT, phân quyền |
+| Spring Data JPA / Hibernate | (theo Spring Boot) | ORM, tự sinh schema |
+| Spring Mail | (theo Spring Boot) | Gửi OTP / nhắc hạn qua email |
+| Lombok | (theo Spring Boot) | Giảm boilerplate code |
+| Thymeleaf | (theo Spring Boot) | Render template (email, trang chào) |
+| iTextPDF | 5.5.13.3 | Xuất hóa đơn PDF |
+| Firebase Admin | 9.4.3 | Push notification |
 
-Kiểm tra bằng lệnh "docker ps" xem mysql container đã chạy thành công hay chưa. Sau đó truy cập vào database để thêm database "shop". Có thể sử dụng "MySQL Workbench" (với username: root, password: 1) hoặc truy cập bằng câu lệnh:
+### Frontend
+| Công nghệ | Phiên bản | Vai trò |
+|-----------|-----------|---------|
+| React | 18 | SPA framework |
+| Node.js | 18 | Runtime build frontend |
+| npm | 9+ | Package manager |
+| Chakra UI | (theo package.json) | UI component library |
+| React Router | (theo package.json) | Điều hướng + route guard |
+| Axios | (theo package.json) | HTTP client, JWT interceptor |
+
+### Database & DevOps
+| Công nghệ | Vai trò |
+|-----------|---------|
+| MySQL 8 | Database chính, chạy trên Docker |
+| Docker + Docker Compose | Container hóa & orchestrate 3 services |
+| Nginx | Serve frontend build + reverse proxy `/api` → backend |
+| Git + GitHub | Version control, Git flow (`main`/`develop`/`feature/*`) |
+
+## Cách cài đặt & chạy hệ thống
+
+### Cách 1: Chạy bằng Docker (khuyến nghị)
+
+Chỉ cần cài **Docker Desktop** (đã có sẵn docker compose).
+
+1. Clone repo và tạo file cấu hình môi trường từ template:
+
 <pre>
-docker exec -it mysql bash
-mysql -u root -p 1
-create database bluemoon_db;
+git clone https://github.com/lekimphu0209/Bluemoon---Apartment_Management.git
+cd Bluemoon---Apartment_Management
+copy .env.example .env
 </pre>
-2. Cài đặt java 17 và maven. Các link tham khảo: https://www.youtube.com/watch?v=mg9jJr2_2Oo và https://www.youtube.com/watch?v=YTvlb6eny_0
 
-Trước khi chạy backend, các bạn cần điền các thông tin sau và file "Backend\src\main\resources\application.properties" để hỗ trợ việc xác thực tài khoản bằng otp:
+Mở file `.env` và điền giá trị thật (mật khẩu DB, JWT secret, tài khoản admin...). File `.env` chứa secrets nên **không được commit** lên git.
+
+2. Build và chạy toàn bộ hệ thống (MySQL + Backend + Frontend):
 
 <pre>
-spring.mail.username = email
-spring.mail.password = password  
+docker compose up -d --build
 </pre>
 
-"email" và "password" chính là tài khoản mail mà các bạn muốn dùng cho hệ thống của mình. Email này sẽ phục vụ việc gửi mail otp đến các mail của tài khoản người dùng. Lưu ý với gmail thì phải dùng "app password" thay vì "password", các bạn vào link sau để lấy "app password": https://myaccount.google.com/u/3/apppasswords
-
-Sau đó chạy các câu lệnh sau để khởi chạy backend:
+3. Kiểm tra trạng thái:
 
 <pre>
-mvn clean install
-mvn spring-boot:run
+docker ps
 </pre>
 
-Hoặc các bạn có thể không cần cài đặt mvn, khi đó sử dụng file mvnw đang có sẵn:
+Cả 3 container `mysql` (healthy), `backend`, `frontend` đều phải `Up`.
+
+4. Truy cập hệ thống:
+
+| Thành phần | Địa chỉ |
+|------------|---------|
+| Frontend | http://localhost |
+| Backend API | http://localhost:9090 |
+| MySQL | localhost:3306 (user: root, password: xem trong `.env`) |
+
+Tài khoản admin mặc định được backend tự tạo lúc khởi động, cấu hình trong `.env`:
 
 <pre>
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=1234567890
+</pre>
+
+### Cách 2: Chạy local để develop
+
+1. **MySQL**: chỉ chạy riêng mysql bằng docker:
+
+<pre>
+docker compose up -d mysql
+</pre>
+
+2. **Backend** (yêu cầu Java 17 + Maven, hoặc dùng `mvnw` có sẵn):
+
+<pre>
+cd Backend
 ./mvnw clean install
 ./mvnw spring-boot:run
 </pre>
 
-Sau khi khởi chạy backend, với sự hỗ trợ của Spring Data JPA  và Hibernate, backend sẽ tự khởi tạo các bảng trong cơ sở dữ liệu.
+Backend chạy ở `http://localhost:9090`. Để dùng tính năng OTP qua email, điền `spring.mail.username` và `spring.mail.password` (app password của Gmail: https://myaccount.google.com/apppasswords) trong `Backend/src/main/resources/application.properties`.
 
-3. Cài đặt nodejs và npm. Nên sử dụng nvm-windows để dễ kiểm soát môi trường, ví dụ hướng dẫn cài đặt nvm-windows: https://www.youtube.com/watch?v=E6k6R4PnLV0
-
-Cài đặt nodejs 18:
+3. **Frontend** (yêu cầu Node.js 18 + npm):
 
 <pre>
-nvm install 18
-nvm use 18
-</pre>
-
-Kiểm tra cài đặt:
-
-<pre>
-node -v   
-npm -v    
-</pre>
-
-Sau đó khởi chạy frontend:
-
-<pre>
+cd FrontEnd
 npm install
 npm start
 </pre>
 
-Sau đó truy cập http://localhost:3000 . Các bạn có thể bắt đầu trải nghiệm trang web từ bây giờ.
+Frontend dev chạy ở `http://localhost:3000`. URL backend được cấu hình qua `REACT_APP_API_BASE_URL` trong `FrontEnd/.env` (local) hoặc build arg từ `.env` root (Docker).
 
 ## Liên hệ
 Cảm ơn các bạn đã đọc 😄🌞😊🙏. 
