@@ -1,0 +1,6 @@
+package com.qlcc.enums;
+
+public enum FeeTypeType {
+    SERVICE, MANAGEMENT, DONATION,
+    PARKING_MOTORBIKE, PARKING_CAR, ELECTRICITY, WATER, INTERNET
+}

@@ -23,6 +23,62 @@
 - **Database**: MySQL 8 trên Docker, schema tự sinh bởi JPA
 - **Triển khai**: Docker Compose orchestrate 3 services (MySQL, Backend, Frontend/Nginx), cấu hình tập trung qua file `.env` ở root
 
+## Cấu trúc thư mục
+
+```
+QLCC/                          ← ROOT repo (git, docker compose, config dùng chung)
+├── .env                       # SECRETS thật (DB, JWT, admin) — KHÔNG commit
+├── .env.example               # Mẫu .env → copy thành .env rồi điền giá trị
+├── .gitignore                 # DUY NHẤT cho cả repo (không tạo thêm trong BE/FE)
+├── .gitattributes             # Chuẩn hoá line-ending, file nhị phân (dùng chung)
+├── prettier.config.js         # Code style JS/TS dùng chung
+├── docker-compose.yml         # Chạy 3 service: mysql + backend + frontend
+├── README.md                  # File này
+│
+├── Backend/                   ← Spring Boot (Java 17, Maven)
+│   ├── pom.xml                # Dependency Maven  (BẮT BUỘC)
+│   ├── mvnw, mvnw.cmd, .mvn/  # Maven wrapper — chạy không cần cài Maven (BẮT BUỘC)
+│   ├── Dockerfile             # Build image backend (BẮT BUỘC cho Docker)
+│   ├── .dockerignore          # Loại target/, .git khỏi build context (riêng BE)
+│   └── src/
+│       ├── main/java/com/qlcc/        # controller / service / repository / entity / dto / security
+│       └── main/resources/
+│           ├── application.properties # Cấu hình Spring (đọc biến từ .env root)
+│           └── db/migration/          # Flyway V1..V6 — schema DB (KHÔNG sửa file cũ, thêm V7+)
+│
+├── FrontEnd/                  ← React 18 (CRA + Chakra UI)
+│   ├── package.json           # Dependency npm (BẮT BUỘC)
+│   ├── package-lock.json      # Khoá version — commit để cả nhóm cài giống nhau
+│   ├── .env                   # Chỉ REACT_APP_API_BASE_URL cho npm start (không có secret)
+│   ├── .eslintrc.json         # ESLint của CRA (riêng FE)
+│   ├── jsconfig.json          # Cho phép import tuyệt đối 'services/...' (riêng FE)
+│   ├── Dockerfile + nginx.conf# Build & serve bằng Nginx (BẮT BUỘC cho Docker)
+│   ├── .dockerignore          # Loại node_modules khỏi build context (riêng FE)
+│   ├── LICENSE                # MIT của template Horizon UI — giữ theo giấy phép
+│   ├── public/
+│   └── src/
+│       ├── views/spec/        # ★ Giao diện BlueMoon mới (SignIn, Dashboard, Account, Layout)
+│       ├── services/apiConfig.js  # Axios + JWT interceptor
+│       └── views/admin|user/  # Giao diện cũ từ template (sẽ thay dần)
+│
+├── docs/                      ← Tài liệu & hình ảnh
+│   ├── PLAN.md                # Kế hoạch / phân tích
+│   └── images/                # Ảnh minh hoạ README
+├── scripts/
+│   └── e2e-backend.ps1        # Script test API end-to-end bằng PowerShell
+└── mysql/data/                # Volume MySQL (gitignore)
+```
+
+### Quy ước về file cấu hình
+
+| Loại | Đặt ở | Lý do |
+|---|---|---|
+| `.gitignore`, `.gitattributes`, `prettier.config.js`, `.env`, `.env.example`, `docker-compose.yml` | **Root** | Dùng chung cho cả BE lẫn FE — 1 bản duy nhất, dễ tìm |
+| `Dockerfile`, `.dockerignore` | **Trong từng service** | Docker build context là `./Backend` và `./FrontEnd` — file phải nằm trong context mới có tác dụng |
+| `pom.xml`, `mvnw*`, `.mvn/` | `Backend/` | Maven bắt buộc |
+| `package.json`, `package-lock.json`, `.eslintrc.json`, `jsconfig.json` | `FrontEnd/` | npm / CRA bắt buộc đọc từ thư mục dự án |
+| Log, output test (`*.log`, `tr*.txt`, `.jwt`…) | **Không commit** | Đã gitignore — xoá thoải mái |
+
 ## Công nghệ đang sử dụng
 
 ### Backend
