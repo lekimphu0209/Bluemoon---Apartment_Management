@@ -1,6 +1,7 @@
 package com.qlcc.exception;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +27,11 @@ public class ApiExceptionHandler {
             body.put("message", ex.getMessage());
         }
         return ResponseEntity.status(ex.getStatus()).body(body);
+    }
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<Map<String, Object>> handleBadCredentials(BadCredentialsException ex) {
+        return ResponseEntity.status(401)
+                .body(Map.of("message", "Tên đăng nhập hoặc mật khẩu không đúng."));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
