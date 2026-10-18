@@ -1,24 +1,49 @@
-HELP.md
+# ============================================================
+# .gitignore DUY NHAT cho toan repo (Backend + FrontEnd + Docker)
+# Khong tao them .gitignore con trong Backend/ hay FrontEnd/
+# ============================================================
 
-# Backend
+# ---------- Backend (Spring Boot / Maven) ----------
 Backend/target/
 Backend/.mvn/wrapper/maven-wrapper.jar
+Backend/HELP.md
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Frontend
+# ---------- Frontend (React / CRA) ----------
 FrontEnd/node_modules/
 FrontEnd/build/
+FrontEnd/coverage/
+FrontEnd/.eslintcache
 FrontEnd/.env.local
 FrontEnd/.env.development.local
 FrontEnd/.env.test.local
 FrontEnd/.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.vercel
 
-# MySQL data
+# ---------- Docker / MySQL ----------
 mysql/data/
 
-# Root env file (contains secrets - không commit)
-.env
+# ---------- Secrets (KHÔNG commit) ----------
+# Chi khoa .env o root (mat khau DB / JWT / admin). Mau: .env.example
+# FrontEnd/.env KHONG chua secret (chi API URL) nen van duoc commit.
+/.env
+
+# ---------- Log & artefact test tam thoi ----------
+*.log
+test-results*.txt
+tr*.txt
+.jwt
+.rid
+.ftid
+.aptid
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
 
 ### STS ###
 .apt_generated

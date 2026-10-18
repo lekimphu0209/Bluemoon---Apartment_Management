@@ -1,9 +1,0 @@
-.git
-.gitignore
-node_modules
-mysql/data
-**/.DS_Store
-**/Thumbs.db
-*.log
-*.pdf
-PLAN.md

@@ -1,0 +1,23 @@
+# Chuan hoa line-ending cho toan bo repo (Backend + FrontEnd)
+* text=auto
+
+# Script shell phai giu LF de chay duoc tren Linux/Docker
+*.sh text eol=lf
+mvnw text eol=lf
+
+# Script Windows giu CRLF
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# File nhi phan
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.jar binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
