@@ -72,3 +72,5 @@ build/
 
 ### VS Code ###
 .vscode/
+graphify-out/
+.claude/
