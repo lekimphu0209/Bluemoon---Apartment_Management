@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { setupMockInterceptor } from './mockApi';
 
 const API_URL = process.env.REACT_APP_API_BASE_URL ? process.env.REACT_APP_API_BASE_URL + '/api' : 'http://localhost:9090/api';
 
@@ -9,6 +10,9 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+// Setup mock interceptor (chỉ hoạt động khi bật USE_MOCK_API)
+setupMockInterceptor(api);
 
 // Thêm interceptor để đính kèm token với mỗi request
 api.interceptors.request.use(

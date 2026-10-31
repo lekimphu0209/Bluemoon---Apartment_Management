@@ -13,6 +13,9 @@ import SpecSignIn from './views/spec/SignIn';
 import DashboardPage from './views/spec/DashboardPage';
 import AccountPage from './views/spec/AccountPage';
 import ComingSoonPage from './views/spec/ComingSoonPage';
+import CanHoPage from './views/spec/CanHoPage';
+import KhoanThuPage from './views/spec/KhoanThuPage';
+import NguoiDanPage from './views/spec/NguoiDanPage';
 
 import { useLocation } from 'react-router-dom';
 
@@ -48,9 +51,9 @@ export default function Main() {
           <Route index element={<Navigate to="/app/tong-quan" replace />} />
           <Route path="tong-quan" element={<DashboardPage />} />
           <Route path="tai-khoan" element={<AccountPage />} />
-          <Route path="khoan-thu/*" element={<ComingSoonPage title="Khoản thu" description="Quản lý các khoản thu và đóng góp." />} />
-          <Route path="can-ho/*" element={<ComingSoonPage title="Căn hộ" description="Quản lý thông tin căn hộ." />} />
-          <Route path="nguoi-dan/*" element={<ComingSoonPage title="Người dân" description="Quản lý hộ gia đình và nhân khẩu." />} />
+          <Route path="khoan-thu" element={<KhoanThuPage />} />
+          <Route path="can-ho/*" element={<CanHoPage />} />
+          <Route path="nguoi-dan" element={<NguoiDanPage />} />
           <Route path="thu-phi/*" element={<ComingSoonPage title="Thu phí" description="Ghi nhận và theo dõi các khoản thu." />} />
           <Route path="bien-dong" element={<ComingSoonPage title="Biến động" description="Theo dõi biến động nhân khẩu, tạm vắng, tạm trú." />} />
           <Route path="thong-ke" element={<ComingSoonPage title="Thống kê" description="Thống kê tình trạng đóng góp." />} />

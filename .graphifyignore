@@ -1,0 +1,11 @@
+target/
+build/
+.mvn/
+.idea/
+.gradle/
+node_modules/
+*.class
+*.jar
+*.log
+uploads/
+Backend/src/main/resources/static/assets/extensions/

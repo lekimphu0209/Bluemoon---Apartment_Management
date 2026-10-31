@@ -1,0 +1,115 @@
+# Mô tả giao diện mẫu: BlueMoon (Căn hộ, Khoản thu, Người dân)
+
+Ba trang dùng chung một layout. Route trong mẫu: /can-ho, /khoan-thu, /nguoi-dan.
+Hãy tái sử dụng layout/CSS hiện có của dự án, chỉ thêm phần thiếu.
+
+## 1. Layout chung
+
+**Sidebar trái** (rộng ~265px, nền xanh navy đậm ~#0d2640, chữ trắng)
+- Đầu sidebar: ô vuông bo góc nền xanh nhạt chữ "B", cạnh đó "BLUEMOON" (in hoa, đậm)
+  và dòng phụ "Quản lý thu phí" (nhỏ, xám xanh). Dưới có đường kẻ mảnh.
+- Tiêu đề nhóm: chữ HOA, nhỏ, xám xanh. Các mục menu bên dưới:
+  - TỔNG QUAN: Tổng quan
+  - DANH MỤC: Khoản thu, Căn hộ, Người dân
+  - NGHIỆP VỤ: Thu phí, Biến động
+  - BÁO CÁO: Thống kê, Tài khoản
+- Mục đang chọn: nền xanh dương đậm hơn (~#1a5a8c), bo góc ~8px, chiếm gần hết bề ngang.
+  (Viền sáng quanh mục ở ảnh Căn hộ và Người dân chỉ là focus ring, không bắt buộc.)
+
+**Topbar** (nền trắng, cao ~70px, có bóng/viền dưới mảnh)
+- Trái: "BlueMoon" (nhỏ, xám) và bên dưới là tên trang (đậm).
+- Phải: "Nguyễn Hoàng" (đậm) và dòng nhỏ xám "Quản trị viên"; bên cạnh là avatar bo góc,
+  nền xanh rất nhạt, chữ "NH" màu xanh.
+
+**Vùng nội dung** (nền xám xanh rất nhạt ~#f5f8fc)
+- Hàng tiêu đề trang: H1 lớn, đậm (~32px) cùng dòng mô tả nhỏ xám bên dưới;
+  nút chính căn phải. Dưới hàng này có đường kẻ ngang mảnh.
+- Nút chính: nền xanh dương (~#1565a8), chữ trắng, bo góc ~8px, có dấu "+" ở đầu.
+- Card công cụ (tìm kiếm + lọc): nền trắng, bo góc ~12px, viền nhạt.
+  - Ô tìm kiếm bên trái: icon kính lúp, placeholder xám, viền nhạt, bo góc.
+  - Bộ lọc dạng segmented control: khung viền nhạt, các lựa chọn nằm ngang;
+    mục đang chọn có nền xanh nhạt và chữ xanh. Mặc định chọn "Tất cả".
+- Card bảng: nền trắng, bo góc ~12px, viền nhạt.
+  - Dòng tiêu đề cột: nền hơi xám, chữ HOA, nhỏ, xám, đậm nhẹ.
+    Cột đầu là checkbox "chọn tất cả".
+  - Mỗi hàng cao ~75px, có checkbox ở đầu và đường kẻ ngăn giữa các hàng.
+  - Cột THAO TÁC căn phải, gồm 2 nút: nền trắng, viền nhạt, bo góc, bóng rất nhẹ.
+- Badge trạng thái (hình viên thuốc, chữ nhỏ, đậm vừa):
+  - Xanh lá: nền xanh lá nhạt, chữ xanh lá đậm, viền nhạt (Đang ở, Đang áp dụng)
+  - Xám: nền xám nhạt, chữ xám (Trống, Ngừng áp dụng, Thường trú)
+  - Vàng: nền vàng nhạt, chữ nâu vàng (Tạm vắng)
+
+## 2. Trang Căn hộ (/can-ho)
+
+- Tiêu đề: "Căn hộ". Mô tả: "Quản lý căn hộ và hộ gia đình đang cư trú."
+- Nút: "+ Thêm căn hộ"
+- Tìm kiếm: "Tìm theo số căn hộ hoặc chủ hộ..."
+- Lọc: Tất cả | Đang ở | Trống
+- Cột: [checkbox] | SỐ CĂN HỘ | TẦNG | CHỦ HỘ | TRẠNG THÁI | THAO TÁC
+- Số căn hộ in đậm. Chủ hộ trống thì hiển thị "—".
+- Nút thao tác: "Xem" và "Chuyển sang Trống"
+
+| Số căn hộ | Tầng | Chủ hộ | Trạng thái |
+|---|---|---|---|
+| A-1201 | 12 | Nguyễn Minh Anh | Đang ở |
+| A-1004 | 10 | Lê Thu Hà | Đang ở |
+| B-0812 | 8 | — | Trống |
+| B-0605 | 6 | Phạm Quang Huy | Đang ở |
+| A-0302 | 3 | Đỗ Lan Phương | Đang ở |
+| A-1506 | 15 | Vũ Đức Long | Đang ở |
+| B-0203 | 2 | — | Trống |
+
+## 3. Trang Khoản thu (/khoan-thu)
+
+- Tiêu đề: "Khoản thu". Mô tả: "Quản lý các loại phí và khoản đóng góp của chung cư."
+- Nút: "+ Thêm khoản thu"
+- Tìm kiếm: "Tìm theo tên khoản thu..."
+- Có 2 nhóm lọc đặt cạnh nhau:
+  - Loại: Tất cả | Phí dịch vụ | Phí quản lý | Đóng góp
+  - Trạng thái: Tất cả | Đang áp dụng | Ngừng áp dụng
+- Cột: [checkbox] | TÊN KHOẢN THU | LOẠI | MỨC THU | TRẠNG THÁI | THAO TÁC
+- Tên khoản thu in đậm vừa; Loại và Mức thu là chữ thường, màu xám.
+- Nút thao tác: "Xem" và "Ngừng áp dụng"
+
+| Tên khoản thu | Loại | Mức thu | Trạng thái |
+|---|---|---|---|
+| Phí dịch vụ tháng 06/2025 | Phí dịch vụ | 8.000 đ/m²/tháng | Đang áp dụng |
+| Phí quản lý quý II/2025 | Phí quản lý | 7.000 đ/m²/tháng | Đang áp dụng |
+| Đóng góp quỹ thiếu nhi | Đóng góp | Tự nguyện | Đang áp dụng |
+| Phí dịch vụ tháng 07/2025 | Phí dịch vụ | 8.000 đ/m²/tháng | Đang áp dụng |
+| Phí quản lý quý III/2025 | Phí quản lý | 7.000 đ/m²/tháng | Đang áp dụng |
+| Đóng góp quỹ khuyến học | Đóng góp | Tự nguyện | Đang áp dụng |
+| Phí dịch vụ tháng 05/2025 | Phí dịch vụ | 8.000 đ/m²/tháng | Ngừng áp dụng |
+
+## 4. Trang Người dân (/nguoi-dan)
+
+- Tiêu đề: "Người dân". Mô tả: "Quản lý nhân khẩu và thông tin cư trú."
+- Nút: "+ Thêm người dân"
+- Tìm kiếm: "Tìm theo tên, CCCD hoặc số điện thoại..."
+- Lọc: Tất cả | Thường trú | Tạm trú | Tạm vắng | Đã chuyển đi
+- Cột: [checkbox] | HỌ TÊN | SỐ ĐIỆN THOẠI | CĂN HỘ | QUAN HỆ | CƯ TRÚ | THAO TÁC
+- Họ tên in đậm vừa, các cột còn lại chữ thường.
+- Nút thao tác: "Xem" và "Chuyển đi"
+
+| Họ tên | Số điện thoại | Căn hộ | Quan hệ | Cư trú |
+|---|---|---|---|---|
+| Nguyễn Minh Anh | 0901 234 567 | A-1201 | Chủ hộ | Thường trú |
+| Trần Hoàng Nam | 0988 102 245 | A-1201 | Thành viên | Thường trú |
+| Lê Thu Hà | 0912 785 003 | A-1004 | Chủ hộ | Thường trú |
+| Phạm Quang Huy | 0936 210 899 | B-0605 | Chủ hộ | Tạm vắng |
+| Đỗ Lan Phương | 0915 420 886 | A-0302 | Chủ hộ | Thường trú |
+| Nguyễn Gia Bảo | 0972 114 225 | A-0302 | Con | Thường trú |
+| Vũ Đức Long | 0904 881 226 | A-1506 | Chủ hộ | Thường trú |
+
+## 5. Hành vi và ghi chú khi code
+
+- Dữ liệu trong bảng ở trên chỉ là dữ liệu mẫu; thực tế lấy từ database/entity hiện có.
+- Ô tìm kiếm và bộ lọc phải hoạt động (lọc phía server hoặc client đều được).
+- Checkbox đầu bảng chọn/bỏ chọn tất cả các hàng.
+- Nút thao tác nên thay đổi theo trạng thái (mẫu đang dùng chung một nhãn cho mọi hàng):
+  - Căn hộ: hàng "Trống" nên hiện "Chuyển sang Đang ở"
+  - Khoản thu: hàng "Ngừng áp dụng" nên hiện "Áp dụng lại"
+- Chưa có mẫu cho form Thêm/Xem/Sửa, popup xác nhận, phân trang. Làm đơn giản theo cùng phong cách,
+  hoặc để lại sau.
+- Làm lần lượt từng trang: Căn hộ, rồi Khoản thu, rồi Người dân. Sidebar và topbar chỉ làm một lần
+  (dùng fragment/layout chung).
